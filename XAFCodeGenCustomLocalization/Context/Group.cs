@@ -8,12 +8,14 @@ namespace XAFCodeGenCustomLocalization.Context
     {
         private string myName;
 
+        public List<Group> ChildGroups { get; set; }
+
         public string Name
         {
             get => myName;
             set
             {
-                if (value != myName)
+                if(value != myName)
                 {
                     myName = value;
                     NotifyPropertyChanged();
@@ -21,8 +23,6 @@ namespace XAFCodeGenCustomLocalization.Context
                 ;
             }
         }
-
-        public List<Group> ChildGroups { get; set; }
 
         public List<Property> Properties { get; set; }
     }

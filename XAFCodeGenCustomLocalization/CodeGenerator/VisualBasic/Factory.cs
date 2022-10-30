@@ -19,7 +19,6 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.VisualBasic
 
         public void GenerateCode(IGeneratorProperty codeProperty, List<Interfaces.INode> data)
         {
-
             myFileName = Common.GetTempFile();
             StreamWriter locStreamWriter = new(myFileName);
             Header.AddHeader(ref locStreamWriter);
@@ -34,11 +33,13 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.VisualBasic
             }
 
 
-
             //Generating ReadOnly Properties
             var locGetFlattenNames = Common.GetNames(data);
 
-            var locGetGroupedGroupNames = locGetFlattenNames.AsEnumerable().Select(locData => locData.GroupName).Distinct().ToList();
+            var locGetGroupedGroupNames = locGetFlattenNames.AsEnumerable()
+                .Select(locData => locData.GroupName)
+                .Distinct()
+                .ToList();
             foreach (string locGroupName in locGetGroupedGroupNames)
             {
                 var locClassNames = locGroupName.Split('\\').ToArray();
@@ -49,12 +50,11 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.VisualBasic
                 locStreamWriter.WriteLine($@"    Partial Friend Class {locClassNames.Last()}");
 
                 //Generating Readonly Properties
-                foreach (LocalizationNaming locName in locGetFlattenNames.Where(locFlatName => locFlatName.GroupName == locGroupName))
+                foreach (LocalizationNaming locName in locGetFlattenNames.Where(
+                    locFlatName => locFlatName.GroupName == locGroupName))
                 {
-
                     if (!string.IsNullOrEmpty(locName.PropertyName))
                     {
-
                         var locGetPropertyName = Domain.Rename.PropertyName(locName.PropertyName, codeProperty);
                         var locStartRegion = @$"     #Region ""Readonly Property {locGetPropertyName}""";
                         var locPropertyText = @$"       Public Shared ReadOnly Property {locGetPropertyName} As String";
@@ -90,9 +90,6 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.VisualBasic
             locStreamWriter.Dispose();
         }
 
-        public string GetCode()
-        {
-            return File.ReadAllText(myFileName);
-        }
+        public string GetCode() => File.ReadAllText(myFileName);
     }
 }

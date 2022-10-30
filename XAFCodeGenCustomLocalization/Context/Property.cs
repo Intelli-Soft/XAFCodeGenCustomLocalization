@@ -1,22 +1,19 @@
-﻿using System;
-using System.Linq;
-
-namespace XAFCodeGenCustomLocalization.Context
+﻿namespace XAFCodeGenCustomLocalization.Context
 {
     internal class Property : Notify
     {
-        private string myName;
-        private bool myIsAllowedToExport;
         private string myExportName;
+        private bool myIsAllowedToExport;
+        private string myName;
 
-        public string Name
+        public string ExportName
         {
-            get => myName;
+            get => myExportName;
             set
             {
-                if (myName != value)
+                if(myExportName != value)
                 {
-                    myName = value;
+                    myExportName = value;
                     NotifyPropertyChanged();
                 }
             }
@@ -27,7 +24,7 @@ namespace XAFCodeGenCustomLocalization.Context
             get => myIsAllowedToExport;
             set
             {
-                if (myIsAllowedToExport != value)
+                if(myIsAllowedToExport != value)
                 {
                     myIsAllowedToExport = value;
                     NotifyPropertyChanged();
@@ -35,14 +32,14 @@ namespace XAFCodeGenCustomLocalization.Context
             }
         }
 
-        public string ExportName
+        public string Name
         {
-            get => myExportName;
+            get => myName;
             set
             {
-                if (myExportName != value)
+                if(myName != value)
                 {
-                    myExportName = value;
+                    myName = value;
                     NotifyPropertyChanged();
                 }
             }

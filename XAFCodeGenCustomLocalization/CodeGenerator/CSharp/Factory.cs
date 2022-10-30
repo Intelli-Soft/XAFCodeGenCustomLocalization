@@ -13,13 +13,12 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
 
         public void Dispose()
         {
-            if (File.Exists(myFileName))
+            if(File.Exists(myFileName))
                 Common.DeleteTempFile(myFileName);
         }
 
         public void GenerateCode(IGeneratorProperty codeProperty, List<Interfaces.INode> data)
         {
-
             myFileName = Common.GetTempFile();
             StreamWriter locStreamWriter = new(myFileName);
             Header.AddHeader(ref locStreamWriter);
@@ -28,19 +27,21 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
             locStreamWriter.WriteLine(string.Empty);
 
             //Generating Namespace
-            if (!string.IsNullOrEmpty(codeProperty.Namespace))
+            if(!string.IsNullOrEmpty(codeProperty.Namespace))
             {
                 locStreamWriter.WriteLine(@$"namespace {codeProperty.Namespace}");
                 locStreamWriter.WriteLine(@"{");
             }
 
 
-
             //Generating ReadOnly Properties
             var locGetFlattenNames = Common.GetNames(data);
 
-            var locGetGroupedGroupNames = locGetFlattenNames.AsEnumerable().Select(locData => locData.GroupName).Distinct().ToList();
-            foreach (string locGroupName in locGetGroupedGroupNames)
+            var locGetGroupedGroupNames = locGetFlattenNames.AsEnumerable()
+                .Select(locData => locData.GroupName)
+                .Distinct()
+                .ToList();
+            foreach(string locGroupName in locGetGroupedGroupNames)
             {
                 var locClassNames = locGroupName.Split('\\').ToArray();
 
@@ -52,12 +53,11 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
                 locStreamWriter.WriteLine(@"    {");
 
                 //Generating Readonly Properties
-                foreach (LocalizationNaming locName in locGetFlattenNames.Where(locFlatName => locFlatName.GroupName == locGroupName))
+                foreach(LocalizationNaming locName in locGetFlattenNames.Where(
+                    locFlatName => locFlatName.GroupName == locGroupName))
                 {
-
-                    if (!string.IsNullOrEmpty(locName.PropertyName))
+                    if(!string.IsNullOrEmpty(locName.PropertyName))
                     {
-
                         var locGetPropertyName = Domain.Rename.PropertyName(locName.PropertyName, codeProperty);
 
                         var locStartRegion = @$"     #region Readonly Property {locGetPropertyName}";
@@ -70,7 +70,13 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
                         var locEndRegion = "     #endregion";
 
                         locStreamWriter.WriteLine(locStartRegion);
-                        locStreamWriter.WriteLine(locPropertyText + locOpenBracket + locGetterText + locGroupPropertyName + locItemName + locCloseBracket);
+                        locStreamWriter.WriteLine(
+                            locPropertyText +
+                                locOpenBracket +
+                                locGetterText +
+                                locGroupPropertyName +
+                                locItemName +
+                                locCloseBracket);
                         locStreamWriter.WriteLine(locEndRegion);
                         locStreamWriter.WriteLine(string.Empty);
                     }
@@ -78,12 +84,9 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
 
                 locStreamWriter.WriteLine(@"    }");
                 locStreamWriter.WriteLine(@"}");
-
-
-
             }
 
-            if (!string.IsNullOrEmpty(codeProperty.Namespace))
+            if(!string.IsNullOrEmpty(codeProperty.Namespace))
             {
                 locStreamWriter.WriteLine(@"}");
             }
@@ -92,9 +95,6 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
             locStreamWriter.Dispose();
         }
 
-        public string GetCode()
-        {
-            return File.ReadAllText(myFileName);
-        }
+        public string GetCode() => File.ReadAllText(myFileName);
     }
 }
