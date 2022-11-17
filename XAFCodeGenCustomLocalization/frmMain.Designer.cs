@@ -159,9 +159,9 @@
             // 
             // txtNamespace
             // 
-            this.txtNamespace.Location = new System.Drawing.Point(112, 12);
+            this.txtNamespace.Location = new System.Drawing.Point(105, 12);
             this.txtNamespace.Name = "txtNamespace";
-            this.txtNamespace.Size = new System.Drawing.Size(801, 20);
+            this.txtNamespace.Size = new System.Drawing.Size(808, 20);
             this.txtNamespace.StyleController = this.layoutControl2;
             this.txtNamespace.TabIndex = 10;
             // 
@@ -189,20 +189,20 @@
             // 
             // rdgCodeGeneration
             // 
-            this.rdgCodeGeneration.Location = new System.Drawing.Point(112, 133);
+            this.rdgCodeGeneration.Location = new System.Drawing.Point(105, 133);
             this.rdgCodeGeneration.Name = "rdgCodeGeneration";
             this.rdgCodeGeneration.Properties.Columns = 2;
             this.rdgCodeGeneration.Properties.ItemHorzAlignment = DevExpress.XtraEditors.RadioItemHorzAlignment.Center;
             this.rdgCodeGeneration.Properties.Items.AddRange(new DevExpress.XtraEditors.Controls.RadioGroupItem[] {
             new DevExpress.XtraEditors.Controls.RadioGroupItem(0, "C#"),
             new DevExpress.XtraEditors.Controls.RadioGroupItem(1, "Visual Basic")});
-            this.rdgCodeGeneration.Size = new System.Drawing.Size(801, 56);
+            this.rdgCodeGeneration.Size = new System.Drawing.Size(808, 56);
             this.rdgCodeGeneration.StyleController = this.layoutControl2;
             this.rdgCodeGeneration.TabIndex = 7;
             // 
             // rdgTextOptions
             // 
-            this.rdgTextOptions.Location = new System.Drawing.Point(112, 84);
+            this.rdgTextOptions.Location = new System.Drawing.Point(105, 84);
             this.rdgTextOptions.Name = "rdgTextOptions";
             this.rdgTextOptions.Properties.Columns = 4;
             this.rdgTextOptions.Properties.Items.AddRange(new DevExpress.XtraEditors.Controls.RadioGroupItem[] {
@@ -210,23 +210,23 @@
             new DevExpress.XtraEditors.Controls.RadioGroupItem(1, "First letter to upper"),
             new DevExpress.XtraEditors.Controls.RadioGroupItem(2, "Text to lower"),
             new DevExpress.XtraEditors.Controls.RadioGroupItem(3, "Text to upper")});
-            this.rdgTextOptions.Size = new System.Drawing.Size(801, 45);
+            this.rdgTextOptions.Size = new System.Drawing.Size(808, 45);
             this.rdgTextOptions.StyleController = this.layoutControl2;
             this.rdgTextOptions.TabIndex = 6;
             // 
             // txtPostfix
             // 
-            this.txtPostfix.Location = new System.Drawing.Point(112, 60);
+            this.txtPostfix.Location = new System.Drawing.Point(105, 60);
             this.txtPostfix.Name = "txtPostfix";
-            this.txtPostfix.Size = new System.Drawing.Size(801, 20);
+            this.txtPostfix.Size = new System.Drawing.Size(808, 20);
             this.txtPostfix.StyleController = this.layoutControl2;
             this.txtPostfix.TabIndex = 5;
             // 
             // txtPraefix
             // 
-            this.txtPraefix.Location = new System.Drawing.Point(112, 36);
+            this.txtPraefix.Location = new System.Drawing.Point(105, 36);
             this.txtPraefix.Name = "txtPraefix";
-            this.txtPraefix.Size = new System.Drawing.Size(801, 20);
+            this.txtPraefix.Size = new System.Drawing.Size(808, 20);
             this.txtPraefix.StyleController = this.layoutControl2;
             this.txtPraefix.TabIndex = 4;
             // 
@@ -254,7 +254,7 @@
             this.layoutControlItem5.Name = "layoutControlItem5";
             this.layoutControlItem5.Size = new System.Drawing.Size(905, 24);
             this.layoutControlItem5.Text = "Praefix";
-            this.layoutControlItem5.TextSize = new System.Drawing.Size(88, 13);
+            this.layoutControlItem5.TextSize = new System.Drawing.Size(81, 13);
             // 
             // emptySpaceItem1
             // 
@@ -271,7 +271,7 @@
             this.layoutControlItem6.Name = "layoutControlItem6";
             this.layoutControlItem6.Size = new System.Drawing.Size(905, 24);
             this.layoutControlItem6.Text = "Postfix";
-            this.layoutControlItem6.TextSize = new System.Drawing.Size(88, 13);
+            this.layoutControlItem6.TextSize = new System.Drawing.Size(81, 13);
             // 
             // layoutControlItem7
             // 
@@ -280,7 +280,7 @@
             this.layoutControlItem7.Name = "layoutControlItem7";
             this.layoutControlItem7.Size = new System.Drawing.Size(905, 49);
             this.layoutControlItem7.Text = "Text options";
-            this.layoutControlItem7.TextSize = new System.Drawing.Size(88, 13);
+            this.layoutControlItem7.TextSize = new System.Drawing.Size(81, 13);
             // 
             // layoutControlItem8
             // 
@@ -289,7 +289,7 @@
             this.layoutControlItem8.Name = "layoutControlItem8";
             this.layoutControlItem8.Size = new System.Drawing.Size(905, 60);
             this.layoutControlItem8.Text = "Code Generation";
-            this.layoutControlItem8.TextSize = new System.Drawing.Size(88, 13);
+            this.layoutControlItem8.TextSize = new System.Drawing.Size(81, 13);
             // 
             // layoutControlItem9
             // 
@@ -316,7 +316,7 @@
             this.layoutControlItem11.Name = "layoutControlItem11";
             this.layoutControlItem11.Size = new System.Drawing.Size(905, 24);
             this.layoutControlItem11.Text = "Namespace";
-            this.layoutControlItem11.TextSize = new System.Drawing.Size(88, 13);
+            this.layoutControlItem11.TextSize = new System.Drawing.Size(81, 13);
             // 
             // grdMain
             // 
@@ -336,12 +336,12 @@
             // 
             // txtPath
             // 
-            this.txtPath.Location = new System.Drawing.Point(84, 12);
+            this.txtPath.Location = new System.Drawing.Point(81, 12);
             this.txtPath.Name = "txtPath";
             this.txtPath.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
             this.txtPath.Properties.ReadOnly = true;
-            this.txtPath.Size = new System.Drawing.Size(857, 20);
+            this.txtPath.Size = new System.Drawing.Size(860, 20);
             this.txtPath.StyleController = this.layoutControl1;
             this.txtPath.TabIndex = 5;
             this.txtPath.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.txtPath_ButtonClick);
@@ -387,7 +387,7 @@
             this.layoutControlItem2.Name = "layoutControlItem2";
             this.layoutControlItem2.Size = new System.Drawing.Size(933, 24);
             this.layoutControlItem2.Text = "XAFML Path";
-            this.layoutControlItem2.TextSize = new System.Drawing.Size(60, 13);
+            this.layoutControlItem2.TextSize = new System.Drawing.Size(57, 13);
             // 
             // layoutControlItem3
             // 
@@ -439,9 +439,9 @@
             this.ClientSize = new System.Drawing.Size(955, 725);
             this.Controls.Add(this.directXFormContainerControl1);
             this.DoubleBuffered = true;
+            this.IconOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("frmMainForm.IconOptions.SvgImage")));
             this.Name = "frmMainForm";
             this.Text = "XAF Code Generator";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_Closing);
             this.directXFormContainerControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();

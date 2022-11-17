@@ -49,6 +49,20 @@ namespace XAFCodeGenCustomLocalization.Domain
                 locReturnName = locReturnName + generatorProperty.Postfix.Trim();
             }
 
+            IReservedWords locReservedWords = null;
+            switch(generatorProperty.CodeGenerator)
+            {
+                case Enums.TypeOfCodeGenerator.C:
+                    CodeGenerator.CSharp.ReservedWords locCSharpReservedWords = new();
+                    locReservedWords = locCSharpReservedWords;
+                    break;
+                case Enums.TypeOfCodeGenerator.VB:
+                    CodeGenerator.VisualBasic.ReservedWords locVBReservedWords = new();
+                    locReservedWords = locVBReservedWords;
+                    break;
+            }
+            locReturnName = locReservedWords.GetPropertyName(locReturnName);
+
             return locReturnName;
         }
     }

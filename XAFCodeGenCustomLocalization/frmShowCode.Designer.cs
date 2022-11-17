@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmShowCode));
             this.directXFormContainerControl1 = new DevExpress.XtraEditors.DirectXFormContainerControl();
             this.recCode = new DevExpress.XtraRichEdit.RichEditControl();
             this.directXFormContainerControl1.SuspendLayout();
@@ -44,7 +45,7 @@
             // recCode
             // 
             this.recCode.ActiveViewType = DevExpress.XtraRichEdit.RichEditViewType.Draft;
-            this.recCode.Appearance.Text.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.recCode.Appearance.Text.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.recCode.Appearance.Text.Options.UseFont = true;
             this.recCode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.recCode.LayoutUnit = DevExpress.XtraRichEdit.DocumentLayoutUnit.Pixel;
@@ -62,6 +63,7 @@
             this.ClientSize = new System.Drawing.Size(1166, 778);
             this.Controls.Add(this.directXFormContainerControl1);
             this.DoubleBuffered = true;
+            this.IconOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("frmShowCode.IconOptions.SvgImage")));
             this.MinimizeBox = false;
             this.Name = "frmShowCode";
             this.Text = "Generated Code";
