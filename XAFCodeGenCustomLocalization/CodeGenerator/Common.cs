@@ -18,10 +18,7 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator
                     {
                         locLocalizationNaming = new LocalizationNaming();
 
-                        var locGroupName = RemoveWhiteSpacesAndSetFirstLetterUppercase(GroupName);
-                        var locNodeName = RemoveWhiteSpacesAndSetFirstLetterUppercase(nodeData.NodeName);
-
-                        locLocalizationNaming.GroupName = string.Format(@$"{locGroupName}\{locNodeName}");
+                        locLocalizationNaming.GroupName = string.Format(@$"{GroupName}\{nodeData.NodeName}");
                         locLocalizationNaming.PropertyName = locPropertyName.PropertyName;
                         yield return locLocalizationNaming;
                     }
@@ -70,29 +67,6 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator
             }
 
             return locReturnList;
-        }
-
-        internal static string RemoveWhiteSpacesAndSetFirstLetterUppercase(string name)
-        {
-            var locStrings = name.Trim().Split(" ");
-            
-            if (locStrings.Length > 1 ) {
-                //Let the first letter as the user wants - maybe it should be lowercase
-                for (int locItem = 1; locItem < locStrings.Count(); locItem++)
-                {
-                    if (locStrings[locItem].Length == 0)
-                        throw new Exception("Empty word?");
-                    else if (locStrings[locItem].Length == 1)
-                        locStrings[locItem] = char.ToUpper(locStrings[locItem][0]).ToString();
-                    else
-                        locStrings[locItem] = char.ToUpper(locStrings[locItem][0]) + locStrings[locItem].Substring(1);
-                }
-
-            }
-
-            return string.Join("", locStrings);
-
-
         }
 
         internal static string GetTempFile()

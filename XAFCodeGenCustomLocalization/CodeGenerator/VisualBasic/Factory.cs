@@ -13,7 +13,7 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.VisualBasic
 
         public void Dispose()
         {
-            if (File.Exists(myFileName))
+            if(File.Exists(myFileName))
                 Common.DeleteTempFile(myFileName);
         }
 
@@ -27,7 +27,7 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.VisualBasic
             locStreamWriter.WriteLine(string.Empty);
 
             //Generating Namespace
-            if (!string.IsNullOrEmpty(codeProperty.Namespace))
+            if(!string.IsNullOrEmpty(codeProperty.Namespace))
             {
                 locStreamWriter.WriteLine(@$"Namespace {codeProperty.Namespace}");
             }
@@ -40,20 +40,63 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.VisualBasic
                 .Select(locData => locData.GroupName)
                 .Distinct()
                 .ToList();
-            foreach (string locGroupName in locGetGroupedGroupNames)
+
+
+            //Namespace names and class names are not allowed to have whitespaces
+            //XAF does allow to have property id's which include whitespaces
+            //we need to make namespace/class names without whitespaces
+
+            IGeneratorProperty locGeneratorPropertyForNamespacesAndClasses = codeProperty;
+            locGeneratorPropertyForNamespacesAndClasses.TextChange = Enums.TypeOfTextChange.FirstToUpper;
+            locGeneratorPropertyForNamespacesAndClasses.Postfix = string.Empty;
+            locGeneratorPropertyForNamespacesAndClasses.Praefix = string.Empty;
+
+
+            foreach(string locGroupName in locGetGroupedGroupNames)
             {
                 var locClassNames = locGroupName.Split('\\').ToArray();
 
-                locStreamWriter.WriteLine(@$"Namespace {string.Join(".", locClassNames)}");
+
+                //We have to check, if the groups go deeper than only one child
+                //the issue is, that a namespace and a class name is not allowed to be the same
+                //within the same hierachy. This is, why 'locIsToSkipNamespace' is 
+                //introduced here
+
+
+                var locNamespace = string.Join(".", locClassNames.SkipLast(1));
+
+                var locCountOfSameNameGroups = locGetGroupedGroupNames.Where(
+                    locGroupNameToCheck => locGroupNameToCheck.StartsWith(
+                            string.Join("\\", locClassNames.SkipLast(1)).ToString()) &
+                        locGroupNameToCheck != string.Join("\\", locClassNames).ToString())
+                    .Count();
+
+                bool locIsToSkipNamespace = false;
+
+                if(locCountOfSameNameGroups > 0)
+                {
+                    if((locGetGroupedGroupNames.Where(
+                            locGroupNameToCheck => locGroupNameToCheck.StartsWith(
+                                string.Join("\\", locClassNames.SkipLast(1)).ToString()))
+                            .First()) !=
+                        locGroupName)
+                        locIsToSkipNamespace = true;
+                }
+
+
+                if(locIsToSkipNamespace == false)
+                {
+                    locStreamWriter.WriteLine(@$"Namespace {string.Join(".", locClassNames)}");
+                }
 
                 //Generating partial Class
                 locStreamWriter.WriteLine($@"    Partial Friend Class {locClassNames.Last()}");
 
                 //Generating Readonly Properties
-                foreach (LocalizationNaming locName in locGetFlattenNames.Where(
+                foreach(LocalizationNaming locName in locGetFlattenNames.Where(
                     locFlatName => locFlatName.GroupName == locGroupName))
                 {
-                    if (!string.IsNullOrEmpty(locName.PropertyName))
+                    if(!string.IsNullOrEmpty(locName.PropertyName))
                     {
                         var locGetPropertyName = Domain.Rename.PropertyName(locName.PropertyName, codeProperty);
                         var locStartRegion = @$"     #Region ""Readonly Property {locGetPropertyName}""";
@@ -78,10 +121,11 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.VisualBasic
                 }
 
                 locStreamWriter.WriteLine(@"    End Class");
-                locStreamWriter.WriteLine(@"End Namespace");
+                if(locIsToSkipNamespace == false)
+                    locStreamWriter.WriteLine(@"End Namespace");
             }
 
-            if (!string.IsNullOrEmpty(codeProperty.Namespace))
+            if(!string.IsNullOrEmpty(codeProperty.Namespace))
             {
                 locStreamWriter.WriteLine(@"End Namespace");
             }

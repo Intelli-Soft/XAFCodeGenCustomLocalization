@@ -12,33 +12,39 @@ namespace XAFCodeGenCustomLocalization.Domain
                 return string.Empty;
 
             string locReturnName = originalName.Trim();
-            switch(generatorProperty.TextChange)
+
+            var locAllWords = locReturnName.Split(" ");
+            for (int locItemIndex = 0; locItemIndex < locAllWords.Length; locItemIndex++)
             {
-                case Enums.TypeOfTextChange.None:
-                    break;
+                switch (generatorProperty.TextChange)
+                {
+                    case Enums.TypeOfTextChange.None:
+                        break;
 
-                case Enums.TypeOfTextChange.FirstToUpper:
-                    if(locReturnName.Length == 0)
-                        Console.WriteLine("Empty string can not be capitalized");
-                    else if(locReturnName.Length == 1)
-                        char.ToUpper(locReturnName[0]);
-                    else
-                        locReturnName = char.ToUpper(locReturnName[0]) + locReturnName.Substring(1);
-                    break;
+                    case Enums.TypeOfTextChange.FirstToUpper:
+                        if (locAllWords[locItemIndex].Length == 0)
+                            Console.WriteLine("Empty string can not be capitalized");
+                        else if (locReturnName.Length == 1)
+                            locAllWords[locItemIndex] = char.ToUpper(locAllWords[locItemIndex][0]).ToString();
+                        else
+                            locAllWords[locItemIndex] = char.ToUpper(locAllWords[locItemIndex][0]) + locAllWords[locItemIndex].Substring(1);
+                        break;
 
-                case Enums.TypeOfTextChange.ToLower:
-                    if(locReturnName.Length == 0)
-                        Console.WriteLine("Empty string can not be changed to lower");
-                    else
-                        locReturnName = locReturnName.ToLower();
-                    break;
-                case Enums.TypeOfTextChange.ToUpper:
-                    if(locReturnName.Length == 0)
-                        Console.WriteLine("Empty string can not be changed to upper");
-                    else
-                        locReturnName = locReturnName.ToUpper();
-                    break;
+                    case Enums.TypeOfTextChange.ToLower:
+                        if (locAllWords[locItemIndex].Length == 0)
+                            Console.WriteLine("Empty string can not be changed to lower");
+                        else
+                            locAllWords[locItemIndex] = locAllWords[locItemIndex].ToLower();
+                        break;
+                    case Enums.TypeOfTextChange.ToUpper:
+                        if (locAllWords[locItemIndex].Length == 0)
+                            Console.WriteLine("Empty string can not be changed to upper");
+                        else
+                            locAllWords[locItemIndex] = locAllWords[locItemIndex].ToUpper();
+                        break;
+                }
             }
+            locReturnName = string.Join("", locAllWords.ToArray());
 
             if(!string.IsNullOrEmpty(generatorProperty.Praefix))
             {
