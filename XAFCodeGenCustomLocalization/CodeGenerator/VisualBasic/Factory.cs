@@ -81,7 +81,7 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.VisualBasic
                         var locItemName = $@"""{locName.PropertyName}"")";
                         var locCloseGet = @$"{new string('\t', locCountClasses + 4)}End Get";
                         var locEndProperty = @$"{new string('\t', locCountClasses + 3)}End Property";
-                        var locEndRegion = @$"{new string('\\t', locCountClasses + 2)}#End Region";
+                        var locEndRegion = @$"{new string('\t', locCountClasses + 2)}#End Region";
 
                         locStreamWriter.WriteLine(locStartRegion);
                         locStreamWriter.WriteLine(locPropertyText);
@@ -94,17 +94,14 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.VisualBasic
                     }
                 }
 
-                for (int locIndex = 0; locIndex < locCountClasses -1; locIndex++)
+                for (int locIndex = locCountClasses; locIndex >= 0; locIndex--)
                 {
-                    
+                    locStreamWriter.WriteLine(@$"{new string('\t', locIndex)}End Class");
                 }
-                locStreamWriter.WriteLine(@$"{new string('\t', locCountClasses + 1)}End Class");
+                
             }
 
-            if(!string.IsNullOrEmpty(codeProperty.Namespace))
-            {
                 locStreamWriter.WriteLine(@"End Namespace");
-            }
 
             locStreamWriter.Close();
             locStreamWriter.Dispose();
