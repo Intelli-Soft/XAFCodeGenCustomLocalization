@@ -100,9 +100,7 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
                     }
                 }
 
-                //locStreamWriter.WriteLine(@$"{new string('\t', locCountBrackets + 1)}}}");
-
-                WriteClosingBrackets(locStreamWriter, locCountBrackets-1);
+                WriteClosingBrackets(locStreamWriter, locCountBrackets);
             }
             WriteClosingBrackets(locStreamWriter, 1);
             locStreamWriter.Close();
@@ -111,7 +109,7 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
 
         private static void WriteClosingBrackets(StreamWriter locStreamWriter, int CountOfClosingBrackets)
         {
-            for (int i = CountOfClosingBrackets; i >= 0; i--)
+            for (int i = CountOfClosingBrackets - 1; i >= 0; i--)
             {
                 string locTabs = new string('\t', i);
                 locStreamWriter.WriteLine(@$"{locTabs}}}");
@@ -119,7 +117,7 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
         }
         private static void WriteOpeningBrackets(StreamWriter locStreamWriter, int CountOfOpeningBrackets)
         {
-            for (int i = 0; i < CountOfOpeningBrackets; i++)
+            for (int i = 0; i < CountOfOpeningBrackets -1; i++)
             {
                 string locTabs = new string('\t', i);
                 locStreamWriter.WriteLine(@$"{locTabs}}}");
