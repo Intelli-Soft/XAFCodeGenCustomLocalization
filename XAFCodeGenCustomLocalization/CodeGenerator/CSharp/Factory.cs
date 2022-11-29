@@ -27,7 +27,7 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
             locStreamWriter.WriteLine(string.Empty);
 
             //Generating Namespace
-            if(!string.IsNullOrEmpty(codeProperty.Namespace))
+            if (!string.IsNullOrEmpty(codeProperty.Namespace))
             {
                 locStreamWriter.WriteLine(@$"namespace {codeProperty.Namespace}");
                 locStreamWriter.WriteLine(@"{");
@@ -51,66 +51,41 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
             locGeneratorPropertyForNamespacesAndClasses.Postfix = string.Empty;
             locGeneratorPropertyForNamespacesAndClasses.Praefix = string.Empty;
 
-
-            foreach(string locGroupName in locGetGroupedGroupNames)
+            foreach (string locGroupName in locGetGroupedGroupNames)
             {
                 var locClassNames = locGroupName.Split('\\').ToArray();
-
-                //We have to check, if the groups go deeper than only one child
-                //the issue is, that a namespace and a class name is not allowed to be the same
-                //within the same hierachy. This is, why 'locIsToSkipNamespace' is 
-                //introduced here
-
-
-                var locNamespace = string.Join(".", locClassNames.SkipLast(1));
-
-                var locCountOfSameNameGroups = locGetGroupedGroupNames.Where(
-                    locGroupNameToCheck => locGroupNameToCheck.StartsWith(
-                            string.Join("\\", locClassNames.SkipLast(1)).ToString()) &
-                        locGroupNameToCheck != string.Join("\\", locClassNames).ToString())
-                    .Count();
-
-                bool locIsToSkipNamespace = false;
-
-                if(locCountOfSameNameGroups > 0)
-                {
-                    if((locGetGroupedGroupNames.Where(
-                            locGroupNameToCheck => locGroupNameToCheck.StartsWith(
-                                string.Join("\\", locClassNames.SkipLast(1)).ToString()))
-                            .First()) !=
-                        locGroupName)
-                        locIsToSkipNamespace = true;
-                }
-
-
-                if(locIsToSkipNamespace == false)
-                {
-                    locStreamWriter.WriteLine(
-                        @$"namespace {Domain.Rename.PropertyName(locNamespace, locGeneratorPropertyForNamespacesAndClasses)}");
-                    locStreamWriter.WriteLine(@"{");
-                }
+                var locCountBrackets = 0;
 
                 //Generating partial Class
-                locStreamWriter.WriteLine(
-                    $@"    internal partial class {Domain.Rename.PropertyName(locClassNames.Last(), locGeneratorPropertyForNamespacesAndClasses)}");
-                locStreamWriter.WriteLine(@"    {");
+
+                foreach (var locClassName in locClassNames)
+                {
+                    locStreamWriter.WriteLine(
+
+                    $@"{new string('\t', locCountBrackets + 1)}internal partial class {Domain.Rename.PropertyName(locClassName, locGeneratorPropertyForNamespacesAndClasses)}");
+                    locStreamWriter.WriteLine(@$"{new string('\t', locCountBrackets + 1)}{{");
+                    locCountBrackets++;
+                }
+
+
+
 
                 //Generating Readonly Properties
-                foreach(LocalizationNaming locName in locGetFlattenNames.Where(
+                foreach (LocalizationNaming locName in locGetFlattenNames.Where(
                     locFlatName => locFlatName.GroupName == locGroupName))
                 {
-                    if(!string.IsNullOrEmpty(locName.PropertyName))
+                    if (!string.IsNullOrEmpty(locName.PropertyName))
                     {
                         var locGetPropertyName = Domain.Rename.PropertyName(locName.PropertyName, codeProperty);
 
-                        var locStartRegion = @$"     #region Readonly Property {locGetPropertyName}";
-                        var locPropertyText = @$"       public static string {locGetPropertyName} ";
+                        var locStartRegion = @$"{new string('\t', locCountBrackets + 2)}#region Readonly Property {locGetPropertyName}";
+                        var locPropertyText = @$"{new string('\t', locCountBrackets + 3)}public static string {locGetPropertyName} ";
                         var locOpenBracket = @"{";
                         var locGetterText = @"get => CaptionHelper.GetLocalizedText(@""";
                         var locGroupPropertyName = $@"\{locName.GroupName}"", ";
                         var locItemName = $@"""{locName.PropertyName}"")";
                         var locCloseBracket = @"; }";
-                        var locEndRegion = "     #endregion";
+                        var locEndRegion = @$"{new string('\t', locCountBrackets + 2)}#endregion";
 
                         locStreamWriter.WriteLine(locStartRegion);
                         locStreamWriter.WriteLine(
@@ -125,20 +100,32 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
                     }
                 }
 
+                //locStreamWriter.WriteLine(@$"{new string('\t', locCountBrackets + 1)}}}");
 
-                locStreamWriter.WriteLine(@"    }");
-                if(locIsToSkipNamespace == false)
-                    locStreamWriter.WriteLine(@"}");
+                WriteClosingBrackets(locStreamWriter, locCountBrackets-1);
             }
-
-            if(!string.IsNullOrEmpty(codeProperty.Namespace))
-            {
-                locStreamWriter.WriteLine(@"}");
-            }
-
+            WriteClosingBrackets(locStreamWriter, 1);
             locStreamWriter.Close();
             locStreamWriter.Dispose();
         }
+
+        private static void WriteClosingBrackets(StreamWriter locStreamWriter, int CountOfClosingBrackets)
+        {
+            for (int i = CountOfClosingBrackets; i >= 0; i--)
+            {
+                string locTabs = new string('\t', i);
+                locStreamWriter.WriteLine(@$"{locTabs}}}");
+            }
+        }
+        private static void WriteOpeningBrackets(StreamWriter locStreamWriter, int CountOfOpeningBrackets)
+        {
+            for (int i = 0; i < CountOfOpeningBrackets; i++)
+            {
+                string locTabs = new string('\t', i);
+                locStreamWriter.WriteLine(@$"{locTabs}}}");
+            }
+        }
+
 
         public string GetCode() => File.ReadAllText(myFileName);
     }

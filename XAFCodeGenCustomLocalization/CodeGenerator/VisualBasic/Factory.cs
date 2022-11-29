@@ -55,43 +55,17 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.VisualBasic
             foreach(string locGroupName in locGetGroupedGroupNames)
             {
                 var locClassNames = locGroupName.Split('\\').ToArray();
+                var locCountClasses = 0;
 
-
-                //We have to check, if the groups go deeper than only one child
-                //the issue is, that a namespace and a class name is not allowed to be the same
-                //within the same hierachy. This is, why 'locIsToSkipNamespace' is 
-                //introduced here
-
-
-                var locNamespace = string.Join(".", locClassNames.SkipLast(1));
-
-                var locCountOfSameNameGroups = locGetGroupedGroupNames.Where(
-                    locGroupNameToCheck => locGroupNameToCheck.StartsWith(
-                            string.Join("\\", locClassNames.SkipLast(1)).ToString()) &
-                        locGroupNameToCheck != string.Join("\\", locClassNames).ToString())
-                    .Count();
-
-                bool locIsToSkipNamespace = false;
-
-                if(locCountOfSameNameGroups > 0)
-                {
-                    if((locGetGroupedGroupNames.Where(
-                            locGroupNameToCheck => locGroupNameToCheck.StartsWith(
-                                string.Join("\\", locClassNames.SkipLast(1)).ToString()))
-                            .First()) !=
-                        locGroupName)
-                        locIsToSkipNamespace = true;
-                }
-
-
-                if(locIsToSkipNamespace == false)
-                {
-                    locStreamWriter.WriteLine(@$"Namespace {string.Join(".", locClassNames)}");
-                }
 
                 //Generating partial Class
-                locStreamWriter.WriteLine($@"    Partial Friend Class {locClassNames.Last()}");
 
+                foreach( var locClassName in locClassNames) {
+
+                    locStreamWriter.WriteLine($@"{new string('\t', locCountClasses + 1)}Partial Friend Class {Domain.Rename.PropertyName(locClassName, locGeneratorPropertyForNamespacesAndClasses)}");
+                    locCountClasses ++;
+                }
+                
                 //Generating Readonly Properties
                 foreach(LocalizationNaming locName in locGetFlattenNames.Where(
                     locFlatName => locFlatName.GroupName == locGroupName))
@@ -99,15 +73,15 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.VisualBasic
                     if(!string.IsNullOrEmpty(locName.PropertyName))
                     {
                         var locGetPropertyName = Domain.Rename.PropertyName(locName.PropertyName, codeProperty);
-                        var locStartRegion = @$"     #Region ""Readonly Property {locGetPropertyName}""";
-                        var locPropertyText = @$"       Public Shared ReadOnly Property {locGetPropertyName} As String";
-                        var locOpenGet = @"         Get";
-                        var locGetterText = @"              Return CaptionHelper.GetLocalizedText(""";
+                        var locStartRegion = @$"{new string('\t', locCountClasses + 2)}#Region ""Readonly Property {locGetPropertyName}""";
+                        var locPropertyText = @$"{new string('\t', locCountClasses + 3)} Public Shared ReadOnly Property {locGetPropertyName} As String";
+                        var locOpenGet = @$"{new string('\t', locCountClasses + 3)}Get";
+                        var locGetterText = @$"{new string('\t', locCountClasses + 4)}Return CaptionHelper.GetLocalizedText(""";
                         var locGroupPropertyName = $@"\{locName.GroupName}"", ";
                         var locItemName = $@"""{locName.PropertyName}"")";
-                        var locCloseGet = @"            End Get";
-                        var locEndProperty = @"     End Property";
-                        var locEndRegion = "     #End Region";
+                        var locCloseGet = @$"{new string('\t', locCountClasses + 4)}End Get";
+                        var locEndProperty = @$"{new string('\t', locCountClasses + 3)}End Property";
+                        var locEndRegion = @$"{new string('\\t', locCountClasses + 2)}#End Region";
 
                         locStreamWriter.WriteLine(locStartRegion);
                         locStreamWriter.WriteLine(locPropertyText);
@@ -120,9 +94,11 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.VisualBasic
                     }
                 }
 
-                locStreamWriter.WriteLine(@"    End Class");
-                if(locIsToSkipNamespace == false)
-                    locStreamWriter.WriteLine(@"End Namespace");
+                for (int locIndex = 0; locIndex < locCountClasses -1; locIndex++)
+                {
+                    
+                }
+                locStreamWriter.WriteLine(@$"{new string('\t', locCountClasses + 1)}End Class");
             }
 
             if(!string.IsNullOrEmpty(codeProperty.Namespace))
