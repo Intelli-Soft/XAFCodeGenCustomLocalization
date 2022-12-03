@@ -90,19 +90,15 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.VisualBasic
 
                             var locStartRegion = @$"{new string('\t', locCountClasses + 2)}#Region ""Function {locGetPropertyName}""";
                             var locPropertyText = @$"{new string('\t', locCountClasses + 3)} Public Shared Function {locPlaceholder.ToString()}({locFunctionSettItems}) As String";
-                            //var locOpenGet = @$"{new string('\t', locCountClasses + 3)}Get";
                             var locGetterText = @$"{new string('\t', locCountClasses + 4)}Return CaptionHelper.GetLocalizedText(""";
                             var locGroupPropertyName = $@"\{locName.GroupName}"", ";
-                            var locItemName = $@"String.Format(""{locName.PropertyName}"",{locPropertyForMemberSetter}))";
-                            //var locCloseGet = @$"{new string('\t', locCountClasses + 4)}End Get";
+                            var locItemName = $@"""{locName.PropertyName}"",{locPropertyForMemberSetter})";
                             var locEndProperty = @$"{new string('\t', locCountClasses + 3)}End Function";
                             var locEndRegion = @$"{new string('\t', locCountClasses + 2)}#End Region";
 
                             locStreamWriter.WriteLine(locStartRegion);
                             locStreamWriter.WriteLine(locPropertyText);
-                            //locStreamWriter.WriteLine(locOpenGet);
                             locStreamWriter.WriteLine(locGetterText + locGroupPropertyName + locItemName);
-                            //locStreamWriter.WriteLine(locCloseGet);
                             locStreamWriter.WriteLine(locEndProperty);
                             locStreamWriter.WriteLine(locEndRegion);
                             locStreamWriter.WriteLine(string.Empty);

@@ -98,7 +98,7 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
                             var locOpenBracket = @"{";
                             var locGetterText = @"return CaptionHelper.GetLocalizedText(@""";
                             var locGroupPropertyName = $@"\{locName.GroupName}"", ";
-                            var locItemName = $@"string.Format(""{locName.PropertyName}"",{locPropertyForMemberSetter}))";
+                            var locItemName = $@"""{locName.PropertyName}"",{locPropertyForMemberSetter})";
                             var locCloseBracket = @"; }";
                             var locEndRegion = @$"{new string('\t', locCountBrackets + 2)}#endregion";
 
