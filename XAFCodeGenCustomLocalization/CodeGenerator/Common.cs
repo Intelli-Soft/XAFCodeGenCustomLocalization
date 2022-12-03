@@ -75,6 +75,8 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator
             string locFileName = Path.ChangeExtension(Guid.NewGuid().ToString(), "IS");
             return Path.Combine(locTempPath, locFileName);
         }
+
+
     }
 }
 

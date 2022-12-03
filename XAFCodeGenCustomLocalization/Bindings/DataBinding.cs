@@ -12,7 +12,7 @@ namespace XAFCodeGenCustomLocalization.Bindings
             (int)Enum.Parse(typeof(T), e.Value.ToString());
 
         private static void Binding_Parse(object sender, ConvertEventArgs e) => e.Value =
-            (Enum.GetName(typeof(T), e.Value.ToString()));
+           Enum.Parse(typeof(T), Enum.GetName(typeof(T), Int32.Parse(e.Value.ToString())));
 
         public static void AddEnumBindingToRadioGroup(RadioGroup radioGroup, object dataSource, string dataMember)
         {
@@ -26,5 +26,6 @@ namespace XAFCodeGenCustomLocalization.Bindings
             locBinding.Format += Binding_Format;
             radioGroup.DataBindings.Add(locBinding);
         }
+
     }
 }

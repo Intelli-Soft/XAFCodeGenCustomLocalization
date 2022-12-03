@@ -70,7 +70,7 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
 
 
 
-                //Generating Readonly Properties
+                //Generating Readonly Properties & Functions
                 foreach (LocalizationNaming locName in locGetFlattenNames.Where(
                     locFlatName => locFlatName.GroupName == locGroupName))
                 {
@@ -78,31 +78,75 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
                     {
                         var locGetPropertyName = Domain.Rename.PropertyName(locName.PropertyName, codeProperty);
 
-                        var locStartRegion = @$"{new string('\t', locCountBrackets + 2)}#region Readonly Property {locGetPropertyName}";
-                        var locPropertyText = @$"{new string('\t', locCountBrackets + 3)}public static string {locGetPropertyName} ";
-                        var locOpenBracket = @"{";
-                        var locGetterText = @"get => CaptionHelper.GetLocalizedText(@""";
-                        var locGroupPropertyName = $@"\{locName.GroupName}"", ";
-                        var locItemName = $@"""{locName.PropertyName}"")";
-                        var locCloseBracket = @"; }";
-                        var locEndRegion = @$"{new string('\t', locCountBrackets + 2)}#endregion";
+                        var locPlaceholder = new PlaceholderRemover(locGetPropertyName);
+                        if (locPlaceholder.HasPlaceholder())
+                        {
+                            var locFunctionSettItems = string.Empty;
+                            var locPropertyForMemberSetter = string.Empty;
 
-                        locStreamWriter.WriteLine(locStartRegion);
-                        locStreamWriter.WriteLine(
-                            locPropertyText +
-                                locOpenBracket +
-                                locGetterText +
-                                locGroupPropertyName +
-                                locItemName +
-                                locCloseBracket);
-                        locStreamWriter.WriteLine(locEndRegion);
-                        locStreamWriter.WriteLine(string.Empty);
+                            for (int locIndex = 0; locIndex < locPlaceholder.GetListOfPlaceHolders().Count(); locIndex++)
+                            {
+                                locFunctionSettItems += $@"string item{locIndex + 1}, ".ToString();
+                                locPropertyForMemberSetter += $@"item{locIndex + 1}, ".ToString();
+                            }
+                            locFunctionSettItems = locFunctionSettItems.TrimEnd().Remove(locFunctionSettItems.TrimEnd().Length - 1, 1);
+                            locPropertyForMemberSetter = locPropertyForMemberSetter.TrimEnd().Remove(locPropertyForMemberSetter.TrimEnd().Length -1, 1);
+
+
+                            var locStartRegion = @$"{new string('\t', locCountBrackets + 2)}#region Function {locGetPropertyName}";
+                            var locPropertyText = @$"{new string('\t', locCountBrackets + 3)}public static string {locPlaceholder.ToString()}({locFunctionSettItems})";
+                            var locOpenBracket = @"{";
+                            var locGetterText = @"return CaptionHelper.GetLocalizedText(@""";
+                            var locGroupPropertyName = $@"\{locName.GroupName}"", ";
+                            var locItemName = $@"string.Format(""{locName.PropertyName}"",{locPropertyForMemberSetter}))";
+                            var locCloseBracket = @"; }";
+                            var locEndRegion = @$"{new string('\t', locCountBrackets + 2)}#endregion";
+
+                            locStreamWriter.WriteLine(locStartRegion);
+                            locStreamWriter.WriteLine(
+                                locPropertyText +
+                                    locOpenBracket +
+                                    locGetterText +
+                                    locGroupPropertyName +
+                                    locItemName +
+                                    locCloseBracket);
+                            locStreamWriter.WriteLine(locEndRegion);
+                            locStreamWriter.WriteLine(string.Empty);
+                        }
+
+
+                        else
+                        {
+
+                            var locStartRegion = @$"{new string('\t', locCountBrackets + 2)}#region Readonly Property {locGetPropertyName}";
+                            var locPropertyText = @$"{new string('\t', locCountBrackets + 3)}public static string {locGetPropertyName} ";
+                            var locOpenBracket = @"{";
+                            var locGetterText = @"get => CaptionHelper.GetLocalizedText(@""";
+                            var locGroupPropertyName = $@"\{locName.GroupName}"", ";
+                            var locItemName = $@"""{locName.PropertyName}"")";
+                            var locCloseBracket = @"; }";
+                            var locEndRegion = @$"{new string('\t', locCountBrackets + 2)}#endregion";
+
+                            locStreamWriter.WriteLine(locStartRegion);
+                            locStreamWriter.WriteLine(
+                                locPropertyText +
+                                    locOpenBracket +
+                                    locGetterText +
+                                    locGroupPropertyName +
+                                    locItemName +
+                                    locCloseBracket);
+                            locStreamWriter.WriteLine(locEndRegion);
+                            locStreamWriter.WriteLine(string.Empty);
+                        }
                     }
                 }
 
                 WriteClosingBrackets(locStreamWriter, locCountBrackets);
             }
-            WriteClosingBrackets(locStreamWriter, 1);
+            if (!string.IsNullOrEmpty(codeProperty.Namespace))
+            {
+                WriteClosingBrackets(locStreamWriter, 1);
+            }
             locStreamWriter.Close();
             locStreamWriter.Dispose();
         }

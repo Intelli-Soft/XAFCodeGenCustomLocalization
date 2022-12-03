@@ -66,42 +66,82 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.VisualBasic
                     locCountClasses ++;
                 }
                 
-                //Generating Readonly Properties
+                //Generating Readonly Properties or Functions
                 foreach(LocalizationNaming locName in locGetFlattenNames.Where(
                     locFlatName => locFlatName.GroupName == locGroupName))
                 {
                     if(!string.IsNullOrEmpty(locName.PropertyName))
                     {
                         var locGetPropertyName = Domain.Rename.PropertyName(locName.PropertyName, codeProperty);
-                        var locStartRegion = @$"{new string('\t', locCountClasses + 2)}#Region ""Readonly Property {locGetPropertyName}""";
-                        var locPropertyText = @$"{new string('\t', locCountClasses + 3)} Public Shared ReadOnly Property {locGetPropertyName} As String";
-                        var locOpenGet = @$"{new string('\t', locCountClasses + 3)}Get";
-                        var locGetterText = @$"{new string('\t', locCountClasses + 4)}Return CaptionHelper.GetLocalizedText(""";
-                        var locGroupPropertyName = $@"\{locName.GroupName}"", ";
-                        var locItemName = $@"""{locName.PropertyName}"")";
-                        var locCloseGet = @$"{new string('\t', locCountClasses + 4)}End Get";
-                        var locEndProperty = @$"{new string('\t', locCountClasses + 3)}End Property";
-                        var locEndRegion = @$"{new string('\t', locCountClasses + 2)}#End Region";
 
-                        locStreamWriter.WriteLine(locStartRegion);
-                        locStreamWriter.WriteLine(locPropertyText);
-                        locStreamWriter.WriteLine(locOpenGet);
-                        locStreamWriter.WriteLine(locGetterText + locGroupPropertyName + locItemName);
-                        locStreamWriter.WriteLine(locCloseGet);
-                        locStreamWriter.WriteLine(locEndProperty);
-                        locStreamWriter.WriteLine(locEndRegion);
-                        locStreamWriter.WriteLine(string.Empty);
+                        var locPlaceholder = new PlaceholderRemover(locGetPropertyName);
+                        if (locPlaceholder.HasPlaceholder())
+                        {
+                            var locFunctionSettItems = string.Empty;
+                            var locPropertyForMemberSetter = string.Empty;
+
+                            for (int locIndex = 0; locIndex < locPlaceholder.GetListOfPlaceHolders().Count(); locIndex++)
+                            {
+                                locFunctionSettItems += $@"Item{locIndex + 1} As String, ".ToString();
+                                locPropertyForMemberSetter += $@"Item{locIndex + 1}, ".ToString();
+                            }
+                            locFunctionSettItems = locFunctionSettItems.TrimEnd().Remove(locFunctionSettItems.TrimEnd().Length - 1, 1);
+                            locPropertyForMemberSetter = locPropertyForMemberSetter.TrimEnd().Remove(locPropertyForMemberSetter.TrimEnd().Length - 1, 1);
+
+                            var locStartRegion = @$"{new string('\t', locCountClasses + 2)}#Region ""Function {locGetPropertyName}""";
+                            var locPropertyText = @$"{new string('\t', locCountClasses + 3)} Public Shared Function {locPlaceholder.ToString()}({locFunctionSettItems}) As String";
+                            //var locOpenGet = @$"{new string('\t', locCountClasses + 3)}Get";
+                            var locGetterText = @$"{new string('\t', locCountClasses + 4)}Return CaptionHelper.GetLocalizedText(""";
+                            var locGroupPropertyName = $@"\{locName.GroupName}"", ";
+                            var locItemName = $@"String.Format(""{locName.PropertyName}"",{locPropertyForMemberSetter}))";
+                            //var locCloseGet = @$"{new string('\t', locCountClasses + 4)}End Get";
+                            var locEndProperty = @$"{new string('\t', locCountClasses + 3)}End Function";
+                            var locEndRegion = @$"{new string('\t', locCountClasses + 2)}#End Region";
+
+                            locStreamWriter.WriteLine(locStartRegion);
+                            locStreamWriter.WriteLine(locPropertyText);
+                            //locStreamWriter.WriteLine(locOpenGet);
+                            locStreamWriter.WriteLine(locGetterText + locGroupPropertyName + locItemName);
+                            //locStreamWriter.WriteLine(locCloseGet);
+                            locStreamWriter.WriteLine(locEndProperty);
+                            locStreamWriter.WriteLine(locEndRegion);
+                            locStreamWriter.WriteLine(string.Empty);
+
+                        }
+                        else
+                        {
+                            var locStartRegion = @$"{new string('\t', locCountClasses + 2)}#Region ""Readonly Property {locGetPropertyName}""";
+                            var locPropertyText = @$"{new string('\t', locCountClasses + 3)} Public Shared ReadOnly Property {locGetPropertyName} As String";
+                            var locOpenGet = @$"{new string('\t', locCountClasses + 3)}Get";
+                            var locGetterText = @$"{new string('\t', locCountClasses + 4)}Return CaptionHelper.GetLocalizedText(""";
+                            var locGroupPropertyName = $@"\{locName.GroupName}"", ";
+                            var locItemName = $@"""{locName.PropertyName}"")";
+                            var locCloseGet = @$"{new string('\t', locCountClasses + 4)}End Get";
+                            var locEndProperty = @$"{new string('\t', locCountClasses + 3)}End Property";
+                            var locEndRegion = @$"{new string('\t', locCountClasses + 2)}#End Region";
+
+                            locStreamWriter.WriteLine(locStartRegion);
+                            locStreamWriter.WriteLine(locPropertyText);
+                            locStreamWriter.WriteLine(locOpenGet);
+                            locStreamWriter.WriteLine(locGetterText + locGroupPropertyName + locItemName);
+                            locStreamWriter.WriteLine(locCloseGet);
+                            locStreamWriter.WriteLine(locEndProperty);
+                            locStreamWriter.WriteLine(locEndRegion);
+                            locStreamWriter.WriteLine(string.Empty);
+                        }
                     }
                 }
 
-                for (int locIndex = locCountClasses; locIndex >= 0; locIndex--)
+                for (int locIndex = locCountClasses; locIndex > 0; locIndex--)
                 {
                     locStreamWriter.WriteLine(@$"{new string('\t', locIndex)}End Class");
                 }
                 
             }
-
+            if (!string.IsNullOrEmpty(codeProperty.Namespace))
+            {
                 locStreamWriter.WriteLine(@"End Namespace");
+            }
 
             locStreamWriter.Close();
             locStreamWriter.Dispose();
