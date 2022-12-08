@@ -30,7 +30,7 @@ For example: When the ID of a localization item is: 'Test Only {0} {1}'
 
 Then the following code is generated:
 
-    #region Function TestOnly{0}{1}
+                #region Function TestOnly{0}{1}
 		  public static string TestOnly(string item1, string item2){return CaptionHelper.GetLocalizedText(@"\WhereEverStored", "TestOnly {0} {1}",item1, item2); }
 		#endregion
 
