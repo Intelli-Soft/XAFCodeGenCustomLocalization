@@ -10,10 +10,28 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
     {
         string myFileName;
 
+        private static void WriteClosingBrackets(StreamWriter locStreamWriter, int CountOfClosingBrackets)
+        {
+            for (int i = CountOfClosingBrackets - 1; i >= 0; i--)
+            {
+                string locTabs = new string('\t', i);
+                locStreamWriter.WriteLine(@$"{locTabs}}}");
+            }
+        }
+
+        private static void WriteOpeningBrackets(StreamWriter locStreamWriter, int CountOfOpeningBrackets)
+        {
+            for (int i = 0; i < CountOfOpeningBrackets - 1; i++)
+            {
+                string locTabs = new string('\t', i);
+                locStreamWriter.WriteLine(@$"{locTabs}}}");
+            }
+        }
+
 
         public void Dispose()
         {
-            if(File.Exists(myFileName))
+            if (File.Exists(myFileName))
                 Common.DeleteTempFile(myFileName);
         }
 
@@ -27,7 +45,7 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
             locStreamWriter.WriteLine(string.Empty);
 
             //Generating Namespace
-            if(!string.IsNullOrEmpty(codeProperty.Namespace))
+            if (!string.IsNullOrEmpty(codeProperty.Namespace))
             {
                 locStreamWriter.WriteLine(@$"namespace {codeProperty.Namespace}");
                 locStreamWriter.WriteLine(@"{");
@@ -51,14 +69,14 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
             locGeneratorPropertyForNamespacesAndClasses.Postfix = string.Empty;
             locGeneratorPropertyForNamespacesAndClasses.Praefix = string.Empty;
 
-            foreach(string locGroupName in locGetGroupedGroupNames)
+            foreach (string locGroupName in locGetGroupedGroupNames)
             {
                 var locClassNames = locGroupName.Split('\\').ToArray();
                 var locCountBrackets = 0;
 
                 //Generating partial Class
 
-                foreach(var locClassName in locClassNames)
+                foreach (var locClassName in locClassNames)
                 {
                     locStreamWriter.WriteLine(
 
@@ -69,43 +87,39 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
 
 
                 //Generating Readonly Properties & Functions
-                foreach(LocalizationNaming locName in locGetFlattenNames.Where(
+                foreach (LocalizationNaming locName in locGetFlattenNames.Where(
                     locFlatName => locFlatName.GroupName == locGroupName))
-                {
-                    if(!string.IsNullOrEmpty(locName.PropertyName))
+                    if (!string.IsNullOrEmpty(locName.PropertyName))
                     {
                         var locGetPropertyName = Domain.Rename.PropertyName(locName.PropertyName, codeProperty);
 
                         var locPlaceholder = new PlaceholderRemover(locGetPropertyName);
-                        if(locPlaceholder.HasPlaceholder() |
+                        if (locPlaceholder.HasPlaceholder() |
                             codeProperty.FrameworkVersion == Enums.TypeOfVersion.DotNetSixPlus)
                         {
                             var locFunctionSettItems = string.Empty;
                             var locPropertyForMemberSetter = string.Empty;
 
 
-                            for(int locIndex = 0; locIndex < locPlaceholder.GetListOfPlaceHolders().Count(); locIndex++)
+                            for (int locIndex = 0; locIndex < locPlaceholder.GetListOfPlaceHolders().Count(); locIndex++)
                             {
                                 locFunctionSettItems += $@"string item{locIndex + 1}, ".ToString();
                                 locPropertyForMemberSetter += $@"item{locIndex + 1}, ".ToString();
                             }
-                            if(!(locFunctionSettItems == string.Empty))
+                            if (!(locFunctionSettItems == string.Empty))
                                 locFunctionSettItems = locFunctionSettItems.TrimEnd()
                                     .Remove(locFunctionSettItems.TrimEnd().Length - 1, 1);
-                            if(!(locPropertyForMemberSetter == string.Empty))
+                            if (!(locPropertyForMemberSetter == string.Empty))
                                 locPropertyForMemberSetter = locPropertyForMemberSetter.TrimEnd()
                                     .Remove(locPropertyForMemberSetter.TrimEnd().Length - 1, 1);
 
-                            if(codeProperty.FrameworkVersion == Enums.TypeOfVersion.DotNetSixPlus)
+                            if (codeProperty.FrameworkVersion == Enums.TypeOfVersion.DotNetSixPlus)
                             {
                                 var locAddServiceProviderInterface = "IServiceProvider serviceProvider";
-                                if(!(locFunctionSettItems == string.Empty))
-                                {
+                                if (!(locFunctionSettItems == string.Empty))
                                     locFunctionSettItems = $@"{locAddServiceProviderInterface}, {locFunctionSettItems}";
-                                } else
-                                {
+                                else
                                     locFunctionSettItems = locAddServiceProviderInterface;
-                                }
                                 ;
                             }
 
@@ -124,12 +138,12 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
                                     locGetterText = @"return CaptionHelper.GetService(serviceProvider).GetLocalizedText(@""";
                                     break;
                             }
-                            
+
                             var locGroupPropertyName = $@"\{locName.GroupName}"", ";
                             var locItemName = $@"""{locName.PropertyName}""";
                             if (!(locPropertyForMemberSetter == string.Empty))
-                                locItemName = locItemName + $@",{locPropertyForMemberSetter}";
-                            locItemName = locItemName + ")";
+                                locItemName += $@",{locPropertyForMemberSetter}";
+                            locItemName += ")";
 
                             var locCloseBracket = @"; }";
                             var locEndRegion = @$"{new string('\t', locCountBrackets + 2)}#endregion";
@@ -144,7 +158,8 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
                                     locCloseBracket);
                             locStreamWriter.WriteLine(locEndRegion);
                             locStreamWriter.WriteLine(string.Empty);
-                        } else
+                        }
+                        else
                         {
                             var locStartRegion = @$"{new string('\t', locCountBrackets + 2)}#region Readonly Property {locGetPropertyName}";
                             var locPropertyText = @$"{new string('\t', locCountBrackets + 3)}public static string {locGetPropertyName} ";
@@ -167,34 +182,13 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
                             locStreamWriter.WriteLine(string.Empty);
                         }
                     }
-                }
 
                 WriteClosingBrackets(locStreamWriter, locCountBrackets);
             }
-            if(!string.IsNullOrEmpty(codeProperty.Namespace))
-            {
+            if (!string.IsNullOrEmpty(codeProperty.Namespace))
                 WriteClosingBrackets(locStreamWriter, 1);
-            }
             locStreamWriter.Close();
             locStreamWriter.Dispose();
-        }
-
-        private static void WriteClosingBrackets(StreamWriter locStreamWriter, int CountOfClosingBrackets)
-        {
-            for(int i = CountOfClosingBrackets - 1; i >= 0; i--)
-            {
-                string locTabs = new string('\t', i);
-                locStreamWriter.WriteLine(@$"{locTabs}}}");
-            }
-        }
-
-        private static void WriteOpeningBrackets(StreamWriter locStreamWriter, int CountOfOpeningBrackets)
-        {
-            for(int i = 0; i < CountOfOpeningBrackets - 1; i++)
-            {
-                string locTabs = new string('\t', i);
-                locStreamWriter.WriteLine(@$"{locTabs}}}");
-            }
         }
 
 
