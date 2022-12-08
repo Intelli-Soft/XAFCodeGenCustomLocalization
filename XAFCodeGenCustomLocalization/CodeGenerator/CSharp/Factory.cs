@@ -106,17 +106,17 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
                                 locFunctionSettItems += $@"string item{locIndex + 1}, ".ToString();
                                 locPropertyForMemberSetter += $@"item{locIndex + 1}, ".ToString();
                             }
-                            if (!(locFunctionSettItems == string.Empty))
+                            if (locFunctionSettItems != string.Empty)
                                 locFunctionSettItems = locFunctionSettItems.TrimEnd()
                                     .Remove(locFunctionSettItems.TrimEnd().Length - 1, 1);
-                            if (!(locPropertyForMemberSetter == string.Empty))
+                            if (locPropertyForMemberSetter != string.Empty)
                                 locPropertyForMemberSetter = locPropertyForMemberSetter.TrimEnd()
                                     .Remove(locPropertyForMemberSetter.TrimEnd().Length - 1, 1);
 
                             if (codeProperty.FrameworkVersion == Enums.TypeOfVersion.DotNetSixPlus)
                             {
                                 var locAddServiceProviderInterface = "IServiceProvider serviceProvider";
-                                if (!(locFunctionSettItems == string.Empty))
+                                if (locFunctionSettItems != string.Empty)
                                     locFunctionSettItems = $@"{locAddServiceProviderInterface}, {locFunctionSettItems}";
                                 else
                                     locFunctionSettItems = locAddServiceProviderInterface;
@@ -141,7 +141,7 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
 
                             var locGroupPropertyName = $@"\{locName.GroupName}"", ";
                             var locItemName = $@"""{locName.PropertyName}""";
-                            if (!(locPropertyForMemberSetter == string.Empty))
+                            if (locPropertyForMemberSetter != string.Empty)
                                 locItemName += $@",{locPropertyForMemberSetter}";
                             locItemName += ")";
 
