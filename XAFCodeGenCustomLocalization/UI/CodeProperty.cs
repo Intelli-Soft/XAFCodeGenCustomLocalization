@@ -12,6 +12,7 @@ namespace XAFCodeGenCustomLocalization.UI
         private string myPostfix;
         private TypeOfTextChange myTypeOfTextChange;
         private TypeOfCodeGenerator myTypeOfCodeGenerator;
+        private TypeOfVersion myTypeOfVersion;
         private string myNamespace;
 
         public string Praefix
@@ -79,5 +80,16 @@ namespace XAFCodeGenCustomLocalization.UI
             }
         }
 
+        public TypeOfVersion FrameworkVersion
+        {
+            get => myTypeOfVersion; set
+            {
+                if (myTypeOfVersion != value)
+                {
+                    myTypeOfVersion = value;
+                    NotifyPropertyChanged();
+                };
+            }
+        }
     }
 }

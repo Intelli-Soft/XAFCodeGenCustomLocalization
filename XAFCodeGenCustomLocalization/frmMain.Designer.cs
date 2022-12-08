@@ -42,6 +42,7 @@
             this.rdgTextOptions = new DevExpress.XtraEditors.RadioGroup();
             this.txtPostfix = new DevExpress.XtraEditors.TextEdit();
             this.txtPraefix = new DevExpress.XtraEditors.TextEdit();
+            this.rdgFramework = new DevExpress.XtraEditors.RadioGroup();
             this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
             this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
@@ -51,6 +52,7 @@
             this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem11 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem12 = new DevExpress.XtraLayout.LayoutControlItem();
             this.grdMain = new DevExpress.XtraGrid.GridControl();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.txtPath = new DevExpress.XtraEditors.ButtonEdit();
@@ -76,6 +78,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.rdgTextOptions.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPostfix.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPraefix.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rdgFramework.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
@@ -85,6 +88,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdMain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPath.Properties)).BeginInit();
@@ -124,7 +128,7 @@
             // 
             this.prgPreparation.Location = new System.Drawing.Point(12, 386);
             this.prgPreparation.Name = "prgPreparation";
-            this.prgPreparation.Size = new System.Drawing.Size(929, 15);
+            this.prgPreparation.Size = new System.Drawing.Size(929, 10);
             this.prgPreparation.StyleController = this.layoutControl1;
             this.prgPreparation.TabIndex = 8;
             // 
@@ -133,9 +137,9 @@
             this.grpCode.CaptionImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("grpCode.CaptionImageOptions.SvgImage")));
             this.grpCode.Controls.Add(this.layoutControl2);
             this.grpCode.Enabled = false;
-            this.grpCode.Location = new System.Drawing.Point(12, 405);
+            this.grpCode.Location = new System.Drawing.Point(12, 400);
             this.grpCode.Name = "grpCode";
-            this.grpCode.Size = new System.Drawing.Size(929, 276);
+            this.grpCode.Size = new System.Drawing.Size(929, 281);
             this.grpCode.TabIndex = 7;
             this.grpCode.Text = "Code Generation";
             // 
@@ -148,12 +152,13 @@
             this.layoutControl2.Controls.Add(this.rdgTextOptions);
             this.layoutControl2.Controls.Add(this.txtPostfix);
             this.layoutControl2.Controls.Add(this.txtPraefix);
+            this.layoutControl2.Controls.Add(this.rdgFramework);
             this.layoutControl2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.layoutControl2.Location = new System.Drawing.Point(2, 33);
             this.layoutControl2.Name = "layoutControl2";
             this.layoutControl2.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(956, -1161, 650, 400);
             this.layoutControl2.Root = this.layoutControlGroup1;
-            this.layoutControl2.Size = new System.Drawing.Size(925, 241);
+            this.layoutControl2.Size = new System.Drawing.Size(925, 246);
             this.layoutControl2.TabIndex = 0;
             this.layoutControl2.Text = "layoutControl2";
             // 
@@ -163,42 +168,42 @@
             this.txtNamespace.Name = "txtNamespace";
             this.txtNamespace.Size = new System.Drawing.Size(808, 20);
             this.txtNamespace.StyleController = this.layoutControl2;
-            this.txtNamespace.TabIndex = 10;
+            this.txtNamespace.TabIndex = 0;
             // 
             // cmdCreateFile
             // 
             this.cmdCreateFile.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("cmdCreateFile.ImageOptions.SvgImage")));
-            this.cmdCreateFile.Location = new System.Drawing.Point(607, 193);
+            this.cmdCreateFile.Location = new System.Drawing.Point(607, 198);
             this.cmdCreateFile.Name = "cmdCreateFile";
             this.cmdCreateFile.Size = new System.Drawing.Size(306, 36);
             this.cmdCreateFile.StyleController = this.layoutControl2;
-            this.cmdCreateFile.TabIndex = 9;
+            this.cmdCreateFile.TabIndex = 8;
             this.cmdCreateFile.Text = "Create file";
             this.cmdCreateFile.Click += new System.EventHandler(this.cmdCreateFile_Click);
             // 
             // cmdShowCode
             // 
             this.cmdShowCode.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("cmdShowCode.ImageOptions.SvgImage")));
-            this.cmdShowCode.Location = new System.Drawing.Point(12, 193);
+            this.cmdShowCode.Location = new System.Drawing.Point(12, 198);
             this.cmdShowCode.Name = "cmdShowCode";
             this.cmdShowCode.Size = new System.Drawing.Size(325, 36);
             this.cmdShowCode.StyleController = this.layoutControl2;
-            this.cmdShowCode.TabIndex = 8;
+            this.cmdShowCode.TabIndex = 7;
             this.cmdShowCode.Text = "Show code file";
             this.cmdShowCode.Click += new System.EventHandler(this.cmdShowCode_Click);
             // 
             // rdgCodeGeneration
             // 
-            this.rdgCodeGeneration.Location = new System.Drawing.Point(105, 133);
+            this.rdgCodeGeneration.Location = new System.Drawing.Point(105, 122);
             this.rdgCodeGeneration.Name = "rdgCodeGeneration";
             this.rdgCodeGeneration.Properties.Columns = 2;
             this.rdgCodeGeneration.Properties.ItemHorzAlignment = DevExpress.XtraEditors.RadioItemHorzAlignment.Center;
             this.rdgCodeGeneration.Properties.Items.AddRange(new DevExpress.XtraEditors.Controls.RadioGroupItem[] {
             new DevExpress.XtraEditors.Controls.RadioGroupItem(0, "C#"),
             new DevExpress.XtraEditors.Controls.RadioGroupItem(1, "Visual Basic")});
-            this.rdgCodeGeneration.Size = new System.Drawing.Size(808, 56);
+            this.rdgCodeGeneration.Size = new System.Drawing.Size(808, 34);
             this.rdgCodeGeneration.StyleController = this.layoutControl2;
-            this.rdgCodeGeneration.TabIndex = 7;
+            this.rdgCodeGeneration.TabIndex = 5;
             // 
             // rdgTextOptions
             // 
@@ -210,9 +215,9 @@
             new DevExpress.XtraEditors.Controls.RadioGroupItem(1, "First letter to upper"),
             new DevExpress.XtraEditors.Controls.RadioGroupItem(2, "Text to lower"),
             new DevExpress.XtraEditors.Controls.RadioGroupItem(3, "Text to upper")});
-            this.rdgTextOptions.Size = new System.Drawing.Size(808, 45);
+            this.rdgTextOptions.Size = new System.Drawing.Size(808, 34);
             this.rdgTextOptions.StyleController = this.layoutControl2;
-            this.rdgTextOptions.TabIndex = 6;
+            this.rdgTextOptions.TabIndex = 4;
             // 
             // txtPostfix
             // 
@@ -220,7 +225,7 @@
             this.txtPostfix.Name = "txtPostfix";
             this.txtPostfix.Size = new System.Drawing.Size(808, 20);
             this.txtPostfix.StyleController = this.layoutControl2;
-            this.txtPostfix.TabIndex = 5;
+            this.txtPostfix.TabIndex = 3;
             // 
             // txtPraefix
             // 
@@ -228,7 +233,18 @@
             this.txtPraefix.Name = "txtPraefix";
             this.txtPraefix.Size = new System.Drawing.Size(808, 20);
             this.txtPraefix.StyleController = this.layoutControl2;
-            this.txtPraefix.TabIndex = 4;
+            this.txtPraefix.TabIndex = 2;
+            // 
+            // rdgFramework
+            // 
+            this.rdgFramework.Location = new System.Drawing.Point(105, 160);
+            this.rdgFramework.Name = "rdgFramework";
+            this.rdgFramework.Properties.Items.AddRange(new DevExpress.XtraEditors.Controls.RadioGroupItem[] {
+            new DevExpress.XtraEditors.Controls.RadioGroupItem(0, ".Net 5-"),
+            new DevExpress.XtraEditors.Controls.RadioGroupItem(1, ".Net 6+")});
+            this.rdgFramework.Size = new System.Drawing.Size(808, 34);
+            this.rdgFramework.StyleController = this.layoutControl2;
+            this.rdgFramework.TabIndex = 6;
             // 
             // layoutControlGroup1
             // 
@@ -242,9 +258,10 @@
             this.layoutControlItem8,
             this.layoutControlItem9,
             this.layoutControlItem10,
-            this.layoutControlItem11});
+            this.layoutControlItem11,
+            this.layoutControlItem12});
             this.layoutControlGroup1.Name = "Root";
-            this.layoutControlGroup1.Size = new System.Drawing.Size(925, 241);
+            this.layoutControlGroup1.Size = new System.Drawing.Size(925, 246);
             this.layoutControlGroup1.TextVisible = false;
             // 
             // layoutControlItem5
@@ -259,7 +276,7 @@
             // emptySpaceItem1
             // 
             this.emptySpaceItem1.AllowHotTrack = false;
-            this.emptySpaceItem1.Location = new System.Drawing.Point(329, 181);
+            this.emptySpaceItem1.Location = new System.Drawing.Point(329, 186);
             this.emptySpaceItem1.Name = "emptySpaceItem1";
             this.emptySpaceItem1.Size = new System.Drawing.Size(266, 40);
             this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
@@ -278,23 +295,23 @@
             this.layoutControlItem7.Control = this.rdgTextOptions;
             this.layoutControlItem7.Location = new System.Drawing.Point(0, 72);
             this.layoutControlItem7.Name = "layoutControlItem7";
-            this.layoutControlItem7.Size = new System.Drawing.Size(905, 49);
+            this.layoutControlItem7.Size = new System.Drawing.Size(905, 38);
             this.layoutControlItem7.Text = "Text options";
             this.layoutControlItem7.TextSize = new System.Drawing.Size(81, 13);
             // 
             // layoutControlItem8
             // 
             this.layoutControlItem8.Control = this.rdgCodeGeneration;
-            this.layoutControlItem8.Location = new System.Drawing.Point(0, 121);
+            this.layoutControlItem8.Location = new System.Drawing.Point(0, 110);
             this.layoutControlItem8.Name = "layoutControlItem8";
-            this.layoutControlItem8.Size = new System.Drawing.Size(905, 60);
+            this.layoutControlItem8.Size = new System.Drawing.Size(905, 38);
             this.layoutControlItem8.Text = "Code Generation";
             this.layoutControlItem8.TextSize = new System.Drawing.Size(81, 13);
             // 
             // layoutControlItem9
             // 
             this.layoutControlItem9.Control = this.cmdShowCode;
-            this.layoutControlItem9.Location = new System.Drawing.Point(0, 181);
+            this.layoutControlItem9.Location = new System.Drawing.Point(0, 186);
             this.layoutControlItem9.Name = "layoutControlItem9";
             this.layoutControlItem9.Size = new System.Drawing.Size(329, 40);
             this.layoutControlItem9.TextSize = new System.Drawing.Size(0, 0);
@@ -303,7 +320,7 @@
             // layoutControlItem10
             // 
             this.layoutControlItem10.Control = this.cmdCreateFile;
-            this.layoutControlItem10.Location = new System.Drawing.Point(595, 181);
+            this.layoutControlItem10.Location = new System.Drawing.Point(595, 186);
             this.layoutControlItem10.Name = "layoutControlItem10";
             this.layoutControlItem10.Size = new System.Drawing.Size(310, 40);
             this.layoutControlItem10.TextSize = new System.Drawing.Size(0, 0);
@@ -317,6 +334,15 @@
             this.layoutControlItem11.Size = new System.Drawing.Size(905, 24);
             this.layoutControlItem11.Text = "Namespace";
             this.layoutControlItem11.TextSize = new System.Drawing.Size(81, 13);
+            // 
+            // layoutControlItem12
+            // 
+            this.layoutControlItem12.Control = this.rdgFramework;
+            this.layoutControlItem12.Location = new System.Drawing.Point(0, 148);
+            this.layoutControlItem12.Name = "layoutControlItem12";
+            this.layoutControlItem12.Size = new System.Drawing.Size(905, 38);
+            this.layoutControlItem12.Text = "Framework";
+            this.layoutControlItem12.TextSize = new System.Drawing.Size(81, 13);
             // 
             // grdMain
             // 
@@ -404,11 +430,11 @@
             // layoutControlItem4
             // 
             this.layoutControlItem4.Control = this.grpCode;
-            this.layoutControlItem4.Location = new System.Drawing.Point(0, 393);
-            this.layoutControlItem4.MaxSize = new System.Drawing.Size(0, 280);
-            this.layoutControlItem4.MinSize = new System.Drawing.Size(258, 248);
+            this.layoutControlItem4.Location = new System.Drawing.Point(0, 388);
+            this.layoutControlItem4.MaxSize = new System.Drawing.Size(0, 285);
+            this.layoutControlItem4.MinSize = new System.Drawing.Size(249, 285);
             this.layoutControlItem4.Name = "layoutControlItem4";
-            this.layoutControlItem4.Size = new System.Drawing.Size(933, 280);
+            this.layoutControlItem4.Size = new System.Drawing.Size(933, 285);
             this.layoutControlItem4.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             this.layoutControlItem4.Text = "Code Generation Item";
             this.layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
@@ -419,7 +445,7 @@
             this.layoutControlItem13.Control = this.prgPreparation;
             this.layoutControlItem13.Location = new System.Drawing.Point(0, 374);
             this.layoutControlItem13.Name = "layoutControlItem13";
-            this.layoutControlItem13.Size = new System.Drawing.Size(933, 19);
+            this.layoutControlItem13.Size = new System.Drawing.Size(933, 14);
             this.layoutControlItem13.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem13.TextVisible = false;
             // 
@@ -456,6 +482,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.rdgTextOptions.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPostfix.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPraefix.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rdgFramework.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
@@ -465,6 +492,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdMain)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPath.Properties)).EndInit();
@@ -513,6 +541,8 @@
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
         private DevExpress.XtraEditors.ProgressBarControl prgPreparation;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem13;
+        private DevExpress.XtraEditors.RadioGroup rdgFramework;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem12;
     }
 }
 

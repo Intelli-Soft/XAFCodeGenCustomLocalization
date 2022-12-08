@@ -12,5 +12,6 @@ namespace XAFCodeGenCustomLocalization.Interfaces
         string Postfix { get; set; }
         string Praefix { get; set; }
         TypeOfTextChange TextChange { get; set; }
+        TypeOfVersion FrameworkVersion { get; set; }
     }
 }

@@ -54,8 +54,14 @@ namespace XAFCodeGenCustomLocalization
                     myCodeProperty,
                     nameof(myCodeProperty.TextChange));
 
+                DataBinding<Enums.TypeOfVersion>.AddEnumBindingToRadioGroup(
+                    rdgFramework,
+                    myCodeProperty,
+                    nameof(myCodeProperty.FrameworkVersion));
+
                 myCodeProperty.CodeGenerator = Enums.TypeOfCodeGenerator.C;
                 myCodeProperty.TextChange = Enums.TypeOfTextChange.None;
+                myCodeProperty.FrameworkVersion = Enums.TypeOfVersion.DotNetFive;
             }
         }
 
