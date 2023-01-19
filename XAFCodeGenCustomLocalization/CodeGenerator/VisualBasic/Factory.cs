@@ -24,6 +24,8 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.VisualBasic
             Header.AddHeader(ref locStreamWriter);
 
             locStreamWriter.WriteLine(@"Imports DevExpress.ExpressApp.Utils");
+            if (codeProperty.FrameworkVersion == Enums.TypeOfVersion.DotNetSixPlus)
+                locStreamWriter.WriteLine("Imports DevExpress.ExpressApp.Services.Localization;");
             locStreamWriter.WriteLine(string.Empty);
 
             //Generating Namespace
@@ -62,8 +64,10 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.VisualBasic
 
                 foreach (var locClassName in locClassNames)
                 {
+                    var locLastItem = locClassName.Split(".").Last();
+
                     locStreamWriter.WriteLine(
-                        $@"{new string('\t', locCountClasses + 1)}Partial Friend Class {Domain.Rename.PropertyName(locClassName, locGeneratorPropertyForNamespacesAndClasses)}");
+                        $@"{new string('\t', locCountClasses + 1)}Partial Friend Class {Domain.Rename.PropertyName(locLastItem, locGeneratorPropertyForNamespacesAndClasses)}");
                     locCountClasses++;
                 }
 
@@ -96,7 +100,7 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.VisualBasic
 
                             if (codeProperty.FrameworkVersion == Enums.TypeOfVersion.DotNetSixPlus)
                             {
-                                var locAddServiceProviderInterface = "serviceProvider As IServiceProvider";
+                                var locAddServiceProviderInterface = "captionHelperProvider As ICaptionHelperProvider";
                                 if (locFunctionSettItems != string.Empty)
                                 {
                                     locFunctionSettItems = $@"{locAddServiceProviderInterface}, {locFunctionSettItems}";
@@ -119,7 +123,7 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.VisualBasic
                                     locGetterText = @$"{new string('\t', locCountClasses + 4)}Return CaptionHelper.GetLocalizedText(""";
                                     break;
                                 case Enums.TypeOfVersion.DotNetSixPlus:
-                                    locGetterText = @$"{new string('\t', locCountClasses + 4)}Return CaptionHelper.GetService(serviceProvider).GetLocalizedText(""";
+                                    locGetterText = @$"{new string('\t', locCountClasses + 4)}Return captionHelperProvider.GetCaptionHelper().GetLocalizedText(""";
                                     break;
                             }
 

@@ -42,6 +42,8 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
             Header.AddHeader(ref locStreamWriter);
 
             locStreamWriter.WriteLine(@"using DevExpress.ExpressApp.Utils;");
+            if (codeProperty.FrameworkVersion == Enums.TypeOfVersion.DotNetSixPlus)
+                locStreamWriter.WriteLine("using DevExpress.ExpressApp.Services.Localization;");
             locStreamWriter.WriteLine(string.Empty);
 
             //Generating Namespace
@@ -78,15 +80,17 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
 
                 foreach (var locClassName in locClassNames)
                 {
+                    var locLastItem = locClassName.Split(".").Last();                  
+                    
                     locStreamWriter.WriteLine(
 
-                        $@"{new string('\t', locCountBrackets + 1)}internal partial class {Domain.Rename.PropertyName(locClassName, locGeneratorPropertyForNamespacesAndClasses)}");
+                        $@"{new string('\t', locCountBrackets + 1)}internal partial class {Domain.Rename.PropertyName(locLastItem, locGeneratorPropertyForNamespacesAndClasses)}");
                     locStreamWriter.WriteLine(@$"{new string('\t', locCountBrackets + 1)}{{");
                     locCountBrackets++;
                 }
 
 
-                //Generating Readonly Properties & Functions
+                //Generating Read-only Properties & Functions
                 foreach (LocalizationNaming locName in locGetFlattenNames.Where(
                     locFlatName => locFlatName.GroupName == locGroupName))
                     if (!string.IsNullOrEmpty(locName.PropertyName))
@@ -115,7 +119,7 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
 
                             if (codeProperty.FrameworkVersion == Enums.TypeOfVersion.DotNetSixPlus)
                             {
-                                var locAddServiceProviderInterface = "IServiceProvider serviceProvider";
+                                var locAddServiceProviderInterface = "ICaptionHelperProvider captionHelperProvider";
                                 if (locFunctionSettItems != string.Empty)
                                     locFunctionSettItems = $@"{locAddServiceProviderInterface}, {locFunctionSettItems}";
                                 else
@@ -135,7 +139,7 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
                                     locGetterText = @"return CaptionHelper.GetLocalizedText(@""";
                                     break;
                                 case Enums.TypeOfVersion.DotNetSixPlus:
-                                    locGetterText = @"return CaptionHelper.GetService(serviceProvider).GetLocalizedText(@""";
+                                    locGetterText = @"return captionHelperProvider.GetCaptionHelper().GetLocalizedText(@""";
                                     break;
                             }
 
