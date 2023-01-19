@@ -16,7 +16,7 @@ https://supportcenter.devexpress.com/ticket/details/t1121273/core-valuemanager-a
 A new selection on the UI is added:
 .Net 5- and .Net 6+
 
-When you coose the .Net 6+ option, the new CaptionHelper.GetService(IServiceProvder serviceProvider) method is used.
+When you coose the .Net 6+ option, the new ICaptionHelperProvider (from Namespace DevExpress.ExpressApp.Services.Localization) method is used.
 This is needed, when you work with Blazor for example. After talking to the support team, this option is yet not needed with WinForms projects
 Even, they are .Net 6 compatible.
 
@@ -33,6 +33,7 @@ Then the following code is generated:
     #region Function TestOnly{0}{1}
 		  public static string TestOnly(string item1, string item2){return CaptionHelper.GetLocalizedText(@"\WhereEverStored", "TestOnly {0} {1}",item1, item2); }
 		#endregion
+
 
 You never miss a placeholder anymore.
 
