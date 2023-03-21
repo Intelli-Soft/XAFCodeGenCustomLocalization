@@ -84,7 +84,7 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
                     
                     locStreamWriter.WriteLine(
 
-                        $@"{new string('\t', locCountBrackets + 1)}internal partial class {Domain.Rename.PropertyName(locLastItem, locGeneratorPropertyForNamespacesAndClasses)}");
+                        $@"{new string('\t', locCountBrackets + 1)}public partial class {Domain.Rename.PropertyName(locLastItem, locGeneratorPropertyForNamespacesAndClasses)}");
                     locStreamWriter.WriteLine(@$"{new string('\t', locCountBrackets + 1)}{{");
                     locCountBrackets++;
                 }
@@ -146,7 +146,7 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.CSharp
                             var locGroupPropertyName = $@"\{locName.GroupName}"", ";
                             var locItemName = $@"""{locName.PropertyName}""";
                             if (locPropertyForMemberSetter != string.Empty)
-                                locItemName += $@",{locPropertyForMemberSetter}";
+                                locItemName += $@", new object[] {{ {locPropertyForMemberSetter} }}";
                             locItemName += ")";
 
                             var locCloseBracket = @"; }";

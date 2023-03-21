@@ -14,9 +14,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
-    <PackageReference Include="DevExpress.Win.BonusSkins" Version="22.2.*-*" />
-    <PackageReference Include="DevExpress.Win.Dialogs" Version="22.2.*-*" />
-    <PackageReference Include="DevExpress.Win.Design" Version="22.2.*-*" />
+    <PackageReference Include="DevExpress.Win.BonusSkins" Version="22.1.*-*" />
+    <PackageReference Include="DevExpress.Win.Dialogs" Version="22.1.*-*" />
+    <PackageReference Include="DevExpress.Win.Design" Version="22.1.*-*" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\Settings.Designer.cs">

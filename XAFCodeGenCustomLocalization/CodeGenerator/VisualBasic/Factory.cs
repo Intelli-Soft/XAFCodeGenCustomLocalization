@@ -67,7 +67,7 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.VisualBasic
                     var locLastItem = locClassName.Split(".").Last();
 
                     locStreamWriter.WriteLine(
-                        $@"{new string('\t', locCountClasses + 1)}Partial Friend Class {Domain.Rename.PropertyName(locLastItem, locGeneratorPropertyForNamespacesAndClasses)}");
+                        $@"{new string('\t', locCountClasses + 1)}Partial Public Class {Domain.Rename.PropertyName(locLastItem, locGeneratorPropertyForNamespacesAndClasses)}");
                     locCountClasses++;
                 }
 
@@ -131,7 +131,7 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.VisualBasic
                             var locGroupPropertyName = $@"\{locName.GroupName}"", ";
                             var locItemName = $@"""{locName.PropertyName}""";
                             if (locPropertyForMemberSetter != string.Empty)
-                                locItemName += $@",{locPropertyForMemberSetter}";
+                                locItemName += $@", New Object() {{ {locPropertyForMemberSetter} }}";
                             locItemName += ")";
                             var locEndProperty = @$"{new string('\t', locCountClasses + 3)}End Function";
                             var locEndRegion = @$"{new string('\t', locCountClasses + 2)}#End Region";
@@ -145,7 +145,7 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator.VisualBasic
                         }
                         else
                         {
-                            var locStartRegion = @$"{new string('\t', locCountClasses + 2)}#Region ""Readonly Property {locGetPropertyName}""";
+                            var locStartRegion = @$"{new string('\t', locCountClasses + 2)}#Region ""Read-only Property {locGetPropertyName}""";
                             var locPropertyText = @$"{new string('\t', locCountClasses + 3)} Public Shared ReadOnly Property {locGetPropertyName} As String";
                             var locOpenGet = @$"{new string('\t', locCountClasses + 3)}Get";
                             var locGetterText = @$"{new string('\t', locCountClasses + 4)}Return CaptionHelper.GetLocalizedText(""";

@@ -10,7 +10,7 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator
         static IEnumerable<LocalizationNaming> GetLocalizationNaming(Interfaces.INode nodeData, string GroupName)
         {
             LocalizationNaming locLocalizationNaming = null;
-            if(nodeData.ChildNodes.Count == 0 || nodeData.NodeData != null)
+            if(nodeData.ChildNodes.Count == 0 && nodeData.NodeData != null)
             {
                 foreach(Interfaces.INodeData locPropertyName in nodeData.NodeData)
                 {
