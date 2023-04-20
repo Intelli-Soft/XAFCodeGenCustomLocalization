@@ -9,14 +9,13 @@ namespace XAFCodeGenCustomLocalization.CodeGenerator
     {
         static IEnumerable<LocalizationNaming> GetLocalizationNaming(Interfaces.INode nodeData, string GroupName)
         {
-            LocalizationNaming locLocalizationNaming = null;
-            if(nodeData.ChildNodes.Count == 0 && nodeData.NodeData != null)
+            if (nodeData.NodeData != null)
             {
                 foreach(Interfaces.INodeData locPropertyName in nodeData.NodeData)
                 {
                     if(locPropertyName.IsAllowedToExport)
                     {
-                        locLocalizationNaming = new LocalizationNaming();
+                        LocalizationNaming locLocalizationNaming = new LocalizationNaming();
 
                         locLocalizationNaming.GroupName = string.Format(@$"{GroupName}\{nodeData.NodeName}");
                         locLocalizationNaming.PropertyName = locPropertyName.PropertyName;
