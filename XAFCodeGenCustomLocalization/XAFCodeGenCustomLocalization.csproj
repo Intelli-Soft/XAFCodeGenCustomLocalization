@@ -7,6 +7,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <StartupObject>XAFCodeGenCustomLocalization.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />

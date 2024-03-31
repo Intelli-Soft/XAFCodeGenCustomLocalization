@@ -221,7 +221,7 @@ namespace XAFCodeGenCustomLocalization
             ActivateGroup(true);
         }
 
-        private string StartCodeGenerationAndGetBackFileContent()
+        public string StartCodeGenerationAndGetBackFileContent()
         {
             Interfaces.ICodeGenerator locCodeGenerator = null;
             if(myCodeProperty.CodeGenerator == Enums.TypeOfCodeGenerator.C)

@@ -37,6 +37,34 @@ Then the following code is generated:
 
 You never miss a placeholder anymore.
 
+Now, with the new update, you can use command line arguments to automatic create files on every build.
+You can use the following arguments:
+
+ /n:namespace     - Namespace of the generated code.
+ /d:destination   - Filename of the generated code.
+ /x:xafml file    - Filename of the xafml file.
+ /l:language      - Language of the generated code.     Possible values: 'C', 'VB'
+ /t:textoptions   - Text options of the generated code. Possible values: 'None', 'FirstToUpper', 'ToLower', 'ToUpper'
+ /f:framework     - Framework of the generated code.    Possible values: 'DotNetFive', 'DotNetSixPlus'
+
+All of the above arguments are needed to execute the application correctly.
+
+Optional arguments:
+ /pre:prefix      - Prefix of the generated code.
+ /post:suffix     - Suffix of the generated code.
+
+ This means, you can use the prebuild task of your Module project
+ At "Before build" you can use the following:
+
+ C:[Path to the downloaded project]\net7.0-windows\xafcodegenCustomLocalization.exe 
+ /n:OStudio.Module.Localization 
+ /d:[Path to your XAF Module project (where the file get's generated)]\Module\Localization.cs 
+ /x:[Path to your XAF Module project]\Model.DesignedDiffs.xafml 
+ /l:C 
+ /t:None 
+ /f:DotNetSixPlus
+
+
 Everybody is welcome this tool for free (MIT License)
 
 I would be happy to get a pizza.... https://www.buymeacoffee.com/IntelliSoft
