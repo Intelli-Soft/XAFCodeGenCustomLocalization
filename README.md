@@ -1,5 +1,18 @@
 # XAFCodeGenCustomLocalization
 
+# Redirect to Non-UI Version
+
+[XAFTSL is the new version, without UI - Fully .NET 8.0 support!](https://github.com/Intelli-Soft/XAFTSL/)
+>[!IMPORTANT]
+>
+>It is the same code generator as described here, but without any reference to Windows only usage.
+>If you don't need a visual UI, because you want to automatic generate the code via Task build options,
+>use
+>
+>[XAFTSL](https://github.com/Intelli-Soft/XAFTSL/)
+
+## What it does
+
 This tool should help with creating type safe localization for XAF
 In XAF (DevExpress) you have to work with "CaptionHelper.GetLocalizedText" method, if you want to receive localized strings
 The DevExpress documentation for this: https://docs.devexpress.com/eXpressAppFramework/112655/localization/how-to-localize-custom-string-constants
